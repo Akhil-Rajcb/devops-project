@@ -1,0 +1,47 @@
+- name: Configure EC2 and install Docker
+  hosts: web
+  become: yes
+
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+
+    - name: Update system packages
+      dnf:
+        name: "*"
+        state: latest
+
+    - name: Install required packages
+      dnf:
+        name:
+          - docker
+          - python3-pip
+        state: present
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Add ec2-user to docker group
+      user:
+        name: ec2-user
+        groups: docker
+        append: yes
+
+    - name: Install Docker SDK for Python (safe method)
+      pip:
+        name: docker
+        executable: pip3
+        extra_args: --ignore-installed
+
+    - name: Pull and run NGINX container
+      docker_container:
+        name: nginx
+        image: nginx
+        state: started
+        restart_policy: always
+        ports:
+          - "80:80"
