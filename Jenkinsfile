@@ -1,14 +1,16 @@
 pipeline {
-    agent any
+    agent {
+        label 'built-in'
+    }
 
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/Anly2004/devops-project.git'
+                git 'https://github.com/Akhil-Rajcb/devops-project.git'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build') {
             steps {
                 sh 'docker build -t mywebapp .'
             }

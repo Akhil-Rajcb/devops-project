@@ -1,0 +1,9 @@
+<html>
+<head>
+    <title>My DevOps App</title>
+</head>
+<body>
+    <h1>Hello from Anly's DevOps Project 🚀</h1>
+    <p>This web app is deployed using Docker and Ansible.</p>
+</body>
+</html>
